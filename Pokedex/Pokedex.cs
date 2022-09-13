@@ -14,7 +14,7 @@ namespace Pokedex
         {
             InitializeComponent();
 
-            var apiProcess = Process.Start(@"C:\Users\akotr\programming\ConnectLine\PokeAPI\PokeAPI\bin\Debug\net6.0\PokeApi.exe");
+            var apiProcess = Process.Start(@"..\..\..\..\PokeAPI\bin\Debug\net6.0\PokeApi.exe");
 
             ApiHandler = new PokeApiHandler();
             RestSharpHandler = new RestSharpHandler("https://localhost:5001/api/pokemon/");
@@ -52,14 +52,18 @@ namespace Pokedex
                 var response = RestSharpHandler.RequestRestSharp("", "", RestSharp.Method.Get);
 
                 var result = new List<Pokemon>();
+                var pokeList = new List<string>();
+
                 if (!string.IsNullOrWhiteSpace(response.Content))
                     result = JsonConvert.DeserializeObject<List<Pokemon>>(response.Content);
 
-                var pokeList = new List<string>();
-                foreach (var pokemon in result)
+                if (result != null)
                 {
-                    pokeList.Add(pokemon.ToString());
-                    nameList.Add(pokemon.Name);
+                    foreach (var pokemon in result)
+                    {
+                        pokeList.Add(pokemon.ToString());
+                        nameList.Add(pokemon.Name);
+                    }
                 }
 
                 listBoxPokemon.DataSource = pokeList;
@@ -87,26 +91,33 @@ namespace Pokedex
                 {
                     labelName.Text = Capitalize(pokemon.Name);
                     pictureBoxSprite.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBoxSprite.ImageLocation = pokemon.Sprites.Other.OfficialArtwork.FrontDefault;
+                    if (pokemon.Sprites != null && pokemon.Sprites.Other != null && pokemon.Sprites.Other.OfficialArtwork != null)
+                        pictureBoxSprite.ImageLocation = pokemon.Sprites.Other.OfficialArtwork.FrontDefault;
 
                     string types = string.Empty;
-                    foreach (var type in pokemon.Types)
+                    if (pokemon.Types != null)
                     {
-                        if (type.Slot == 1)
+                        foreach (var type in pokemon.Types)
                         {
-                            types += Capitalize(type.TypeName.Name);
+                            if (type.TypeName != null)
+                            {
+                                if (type.Slot == 1)
+                                {
+                                    types += Capitalize(type.TypeName.Name);
+                                }
+                                else
+                                {
+                                    types += ", " + Capitalize(type.TypeName.Name);
+                                }
+                            }
                         }
-                        else
-                        {
-                            types += ", " + Capitalize(type.TypeName.Name);
-                        }
+                        labelTypeName.Text = types;
                     }
-                    labelTypeName.Text = types;
                 }
 
                 buttonSearch.Enabled = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show($"Could not find pokemon: {textBoxSearch.Text}");
             }

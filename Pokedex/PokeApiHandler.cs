@@ -10,7 +10,7 @@ namespace Pokedex
 {
     internal class PokeApiHandler
     {
-        internal RestSharpHandler? RestHandler { get; set; }
+        internal RestSharpHandler RestHandler { get; set; }
 
         internal PokeApiHandler()
         {
