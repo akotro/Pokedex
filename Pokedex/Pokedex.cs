@@ -17,7 +17,7 @@ namespace Pokedex
             var apiProcess = Process.Start(@"..\..\..\..\PokeAPI\bin\Debug\net6.0\PokeApi.exe");
 
             ApiHandler = new PokeApiHandler();
-            RestSharpHandler = new RestSharpHandler("https://localhost:5001/api/pokemon/");
+            RestSharpHandler = new("https://localhost:5001/api/pokemon/");
 
             NameList = GetLocalPokemon();
 
@@ -90,6 +90,7 @@ namespace Pokedex
                 if (pokemon != null)
                 {
                     labelName.Text = Capitalize(pokemon.Name);
+
                     pictureBoxSprite.SizeMode = PictureBoxSizeMode.Zoom;
                     if (pokemon.Sprites != null && pokemon.Sprites.Other != null && pokemon.Sprites.Other.OfficialArtwork != null)
                         pictureBoxSprite.ImageLocation = pokemon.Sprites.Other.OfficialArtwork.FrontDefault;
@@ -130,12 +131,9 @@ namespace Pokedex
 
         private void listBoxPokemon_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int id = listBoxPokemon.SelectedIndex;
-
             if (NameList != null)
             {
-                string name = NameList[id];
-
+                string name = NameList[listBoxPokemon.SelectedIndex];
                 UpdatePokemon(name);
             }
         }
