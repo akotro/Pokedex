@@ -130,7 +130,7 @@
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.labelName);
             this.Name = "Pokedex";
-            this.Text = "Form2";
+            this.Text = "PokeDex";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSprite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTitle)).EndInit();
             this.ResumeLayout(false);

@@ -67,7 +67,7 @@ namespace Pokedex
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Could not get local pokemon list\n{ex.Message}");
             }
 
             return nameList;
@@ -75,11 +75,13 @@ namespace Pokedex
 
         private void UpdatePokemon(string name)
         {
+            Pokemon? pokemon = new();
+
             try
             {
                 buttonSearch.Enabled = false;
 
-                var pokemon = ApiHandler.GetPokemon(name);
+                pokemon = ApiHandler.GetPokemon(name);
 
                 if (pokemon != null)
                 {
@@ -106,7 +108,7 @@ namespace Pokedex
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Could not find pokemon: {textBoxSearch.Text}");
             }
         }
 
