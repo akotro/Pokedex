@@ -84,6 +84,8 @@ namespace Pokedex
             try
             {
                 buttonSearch.Enabled = false;
+                textBoxSearch.Enabled = false;
+                Cursor.Current = Cursors.WaitCursor;
 
                 pokemon = ApiHandler.GetPokemon(name);
 
@@ -117,6 +119,8 @@ namespace Pokedex
                 }
 
                 buttonSearch.Enabled = true;
+                textBoxSearch.Enabled = true;
+                Cursor.Current = Cursors.Default;
             }
             catch (Exception)
             {
