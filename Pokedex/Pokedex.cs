@@ -71,7 +71,7 @@ namespace Pokedex
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Could not get local pokemon list\n{ex.Message}");
+                MessageBox.Show($"Could not get local pokemon list\n\nError: {ex.Message}");
             }
 
             return nameList;
@@ -122,9 +122,9 @@ namespace Pokedex
                 textBoxSearch.Enabled = true;
                 Cursor.Current = Cursors.Default;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Could not find pokemon: {textBoxSearch.Text}");
+                MessageBox.Show($"Could not find pokemon: {textBoxSearch.Text}\n\nError: {ex.Message}");
             }
         }
 
