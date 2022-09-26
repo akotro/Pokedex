@@ -81,12 +81,12 @@ namespace Pokedex
         {
             Pokemon? pokemon = new();
 
+            buttonSearch.Enabled = false;
+            textBoxSearch.Enabled = false;
+            Cursor.Current = Cursors.WaitCursor;
+
             try
             {
-                buttonSearch.Enabled = false;
-                textBoxSearch.Enabled = false;
-                Cursor.Current = Cursors.WaitCursor;
-
                 pokemon = ApiHandler.GetPokemon(name);
 
                 if (pokemon != null)
@@ -117,15 +117,15 @@ namespace Pokedex
                         labelTypeName.Text = types;
                     }
                 }
-
-                buttonSearch.Enabled = true;
-                textBoxSearch.Enabled = true;
-                Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Could not find pokemon: {textBoxSearch.Text}\n\nError: {ex.Message}");
             }
+
+            buttonSearch.Enabled = true;
+            textBoxSearch.Enabled = true;
+            Cursor.Current = Cursors.Default;
         }
 
         private string Capitalize(string text)
